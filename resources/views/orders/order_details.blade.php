@@ -6,6 +6,8 @@
     <p><strong>Customer:</strong> {{ $order->customer->name }}</p>
     <p><strong>Date:</strong> {{ $order->created_at->format('d-m-Y') }}</p>
 
+    <p><strong>Order Description: </strong> {{ $order->description}}</p>
+
     <h4>Products</h4>
     <table class="table table-bordered">
         <thead>
