@@ -67,7 +67,7 @@
         <!-- Quantity -->
         <div class="form-group">
             <label>Quantity</label>
-            <input type="text" name="weight" class="form-control" id = "quantity" >
+            <input type="number" name="weight" class="form-control" id = "quantity" >
         </div>
 
         
@@ -220,7 +220,7 @@
 
                         <div class="col-md-12 mb-3">
                             <label for="customerPhone" class="form-label">Customer Phone No.</label>
-                            <input type="text" class="form-control" id="customerPhone" name="phone" placeholder="Enter customer phone no." required>
+                            <input type="number" class="form-control" id="customerPhone" name="phone" placeholder="Enter customer phone no." required>
                         </div>
                     </div>
 
