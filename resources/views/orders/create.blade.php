@@ -263,14 +263,14 @@ $(document).ready(function() {
 
     // Save Product
     $('#productForm').submit(function(e) {
-        // e.preventDefault();
+        e.preventDefault();
         // $.post("{{ route('products.store') }}", $(this).serialize(), function(data) {
         //     $('#product').append(`<option value="${data.id}" selected>${data.name}</option>`);
         //     $('#productModal').modal('hide');
         //     $('#productForm')[0].reset();
         // });
         let formData = new FormData(this);
-
+        
         $.ajax({
             url: "{{ route('products.store') }}",
             type: "POST",
