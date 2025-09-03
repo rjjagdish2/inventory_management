@@ -15,11 +15,19 @@ class CommanController extends Controller
 {
     
     public function getOrders(){
-        $orderIds = Order::get()->pluck('id');
-        return response()->json([
-            'status' => 'success',
-            'order_ids' => $orderIds
-        ]);
+        try{
+            $orderIds = Order::get()->pluck('id');
+            return response()->json([
+                'success' => false,
+                'order_ids' => $orderIds
+            ],200);
+        }catch(Exception $e){
+            return response()->json([
+                'success'=>false,
+                'message'=>'something went wrong!'
+            ], 500);
+        }
+        
         // return response()->json($orders);
     }
     public function getOrderDetails($orderId){
@@ -27,7 +35,7 @@ class CommanController extends Controller
             
             if(!isset($orderId) && !empty($orderId)){
                 return response()->json([
-                    "status"=>"error",
+                    "success"=>false,
                     "message"=>"Order Id is required"
                 ],422);
             }
@@ -39,26 +47,26 @@ class CommanController extends Controller
 
             if(!$data){
                 return response()->json([
-                    "status" => "error",
+                    "success" => false,
                     "message" => "Order not found"
                 ], 404);
             }
 
             return response()->json([
-                'status' => 'success',
+                'success' => true,
                 "message"=>"Order Details",
                 'order_ids' => $data
             ]);
-        }catch (ModelNotFoundException $e) {
+        }catch (Exception $e) {
             return response()->json([
-                "status" => "error",
-                "message" => "Order not found"
-            ], 404);
+                "success" => false,
+                "message" => "Something went wrong"
+            ], 500);
         }
         // return response()->json($data);
     }
     
     public function addInwards(Request $request){
-        
+
     }
 }

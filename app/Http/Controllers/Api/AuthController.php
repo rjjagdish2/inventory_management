@@ -31,17 +31,26 @@ class AuthController extends Controller
     // Login user
     public function login(Request $request)
     {
-        $credentials = $request->only('email', 'password');
+        try{
+            $credentials = $request->only('email', 'password');
 
-        if (!$token = JWTAuth::attempt($credentials)) {
-            return response()->json(['error' => 'Invalid Credentials'], 401);
+            if (!$token = JWTAuth::attempt($credentials)) {
+                return response()->json(['success' => false,'error' => 'Invalid Credentials'], 401);
+            }
+
+            return response()->json([
+                'success' =>true,
+                'access_token' => $token,
+                'token_type'   => 'bearer'
+            ]);
         }
-
-        return response()->json([
-            'access_token' => $token,
-            'token_type'   => 'bearer',
-            'expires_in'   => auth('api')->factory()->getTTL() * 60
-        ]);
+        catch(Exception $e){
+            return response()->json([
+                'success' => false,
+                'message' => 'Something went wrong'
+            ],500);
+        }
+        
     }
 
     // Get logged in user profile
