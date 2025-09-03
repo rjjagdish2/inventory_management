@@ -18,7 +18,7 @@ class CommanController extends Controller
         try{
             $orderIds = Order::get()->pluck('id');
             return response()->json([
-                'success' => false,
+                'success' => true,
                 'order_ids' => $orderIds
             ],200);
         }catch(Exception $e){
@@ -66,7 +66,18 @@ class CommanController extends Controller
         // return response()->json($data);
     }
     
-    public function addInwards(Request $request){
-
+    public function getSuppervisors(){
+        try{
+            $supervisors = Supervisor::all();
+            return response()->json([
+                'success' => true,
+                'supervisors' => $supervisors
+            ],200);
+        }catch(Exception $e){
+            return response()->json([
+                'success'=>false,
+                'message'=>'something went wrong!'
+            ], 500);
+        }
     }
 }

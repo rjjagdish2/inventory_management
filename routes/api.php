@@ -16,8 +16,7 @@ Route::middleware('auth:api')->group(function () {
         
         Route::get('/get-orders-list','getOrders');
         Route::get('/get-order-details/{orderId}','getOrderDetails');
-        
-        Route::get('/get-data/{order-id}','getSupplier');
+        Route::get('/get-supervisors', 'getSuppervisors');
 
         // Route::get('/products', 'getProducts');
         // Route::get('/suppliers', 'getSuppliers');
