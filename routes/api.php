@@ -13,10 +13,16 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
 
     Route::controller(CommanController::class)->group(function () {
-        Route::get('/products', 'getProducts');
-        Route::get('/suppliers', 'getSuppliers');
-        Route::get('/supervisors', 'getSupervisors');
-        Route::post('/store-order', 'storeOrder');
+        
+        Route::get('/get-orders-list','getOrders');
+        Route::get('/get-order-details/{orderId}','getOrderDetails');
+        
+        Route::get('/get-data/{order-id}','getSupplier');
+
+        // Route::get('/products', 'getProducts');
+        // Route::get('/suppliers', 'getSuppliers');
+        // Route::get('/supervisors', 'getSupervisors');
+        // Route::post('/store-order', 'storeOrder');
     });
 });
 

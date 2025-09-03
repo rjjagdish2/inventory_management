@@ -24,7 +24,7 @@
                 <table class="table table-bordered table-hover align-middle mb-0">
                     <thead class="thead-light">
                         <tr>
-                            <th>Grn No</th>
+                            {{-- <th>Grn No</th> --}}
                             <th>Order No</th>
                             <th>Customer</th>
                             <th>Order Date</th>
@@ -34,7 +34,7 @@
                     <tbody>
                         @forelse($orders as $order)
                             <tr>
-                                <td>{{ $order->grn_no ?? 'N/A' }}</td>
+                                {{-- <td>{{ $order->grn_no ?? 'N/A' }}</td> --}}
                                 <td>{{ $order->id }}</td>
                                 <td>{{ $order->customer->name ?? 'N/A' }}</td>
                                 <td>{{ $order->order_date ?? 'N/A' }}</td>

@@ -49,13 +49,13 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'grn_no'=>'required',
+            // 'grn_no'=>'required',
             'customer_id' => 'required',
             'items' => 'required',
         ]);
 
         $order = Order::create([
-            'grn_no'=>$request->grn_no,
+            // 'grn_no'=>$request->grn_no,
             'customer_id' => $request->customer_id,
             'description' => $request->description,
         ]);
@@ -80,5 +80,9 @@ class OrderController extends Controller
         Order::where('id',$id)->delete();
 
         return redirect()->route('order.index');
+    }
+
+    public function printPdf(){
+        
     }
 }

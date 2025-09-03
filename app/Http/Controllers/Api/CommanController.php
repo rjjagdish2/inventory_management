@@ -7,41 +7,58 @@ use Illuminate\Http\Request;
 
 use App\Models\ProductProfile;
 use App\Models\Supplier;
+use App\Models\Order;
 use App\Models\Supervisor;
 
 
 class CommanController extends Controller
 {
-    public function getProducts(){
-        $products = ProductProfile::all();
-        return response()->json($products);   
-    }
-    public function getSuppliers(){
-        $suppliers = Supplier::all();
-        return response()->json($suppliers);   
-    }
-    public function getSupervisors(){
-        $supervisors = Supervisor::all();
-        return response()->json($supervisors);   
-    }
-    public function storeOrder(Request $request){
-        $request->validate([
-            'grn_no' => 'required',
-            'product_id' => 'required|integer',
-            'supplier_id' => 'required|integer',
-            'supervisor_id' => 'required|integer',
-            'tar_weight' => 'nullable|numeric',
-            'gross_weight' => 'nullable|numeric',
-            'net_weight' => 'nullable|numeric',
+    
+    public function getOrders(){
+        $orderIds = Order::get()->pluck('id');
+        return response()->json([
+            'status' => 'success',
+            'order_ids' => $orderIds
         ]);
+        // return response()->json($orders);
+    }
+    public function getOrderDetails($orderId){
+        try {
+            
+            if(!isset($orderId) && !empty($orderId)){
+                return response()->json([
+                    "status"=>"error",
+                    "message"=>"Order Id is required"
+                ],422);
+            }
+            $data = Order::with([
+                'customer', 
+                'products', 
+                'products.suppliers'
+            ])->find($orderId);
 
-        $order = Order::create($request->only([
-            'grn_no',
-            'supplier_id',
-            'supervisor_id',
-            'tar_weight',
-            'gross_weight',
-            'net_weight'
-        ]));
+            if(!$data){
+                return response()->json([
+                    "status" => "error",
+                    "message" => "Order not found"
+                ], 404);
+            }
+
+            return response()->json([
+                'status' => 'success',
+                "message"=>"Order Details",
+                'order_ids' => $data
+            ]);
+        }catch (ModelNotFoundException $e) {
+            return response()->json([
+                "status" => "error",
+                "message" => "Order not found"
+            ], 404);
+        }
+        // return response()->json($data);
+    }
+    
+    public function addInwards(Request $request){
+        
     }
 }

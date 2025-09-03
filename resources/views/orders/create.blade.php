@@ -15,10 +15,10 @@
 
         <input type="hidden" name="items" id="itemsInput">
 
-        <div class="form-group">
+        {{-- <div class="form-group">
             <label>GRN No.</label>
             <input type="text" name="grn_no" class="form-control" id = "grn_no" >
-        </div>
+        </div> --}}
         
         <!-- Customer -->
         <div class="form-group ">
