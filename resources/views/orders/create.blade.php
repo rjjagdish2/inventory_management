@@ -351,6 +351,7 @@ $(document).ready(function() {
         let supplierText = $('#supplier_id option:selected').text();
         let productId = $('#product').val();
         let categoryId = $('#category_id').val();
+        let categoryName = $('#category_name').val();
         let productText = $('#product option:selected').text();
         let quantity = $('#quantity').val();
         
@@ -369,7 +370,7 @@ $(document).ready(function() {
             supplier_id: supplierId,
             supplier_name: supplierText,
             product_id: productId,
-            product_id: categoryId,
+            category_id: categoryId,
             product_name: productText,
             quantity: quantity,
         };
@@ -383,6 +384,7 @@ $(document).ready(function() {
             <tr>
                 <td>${supplierText}</td>
                 <td>${productText}</td>
+                <td>${categoryName}</td>
                 <td>${quantity}</td>
                 <td>
                     <button type="button" class="btn btn-danger btn-sm removeItem">X</button>
