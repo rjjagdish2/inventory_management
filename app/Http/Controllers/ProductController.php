@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\ProductProfile;
 use App\Models\ProductSupplier;
 use App\Models\Supplier;
+use App\Models\Category;
 
 class ProductController extends Controller
 {
@@ -40,6 +41,7 @@ class ProductController extends Controller
         $product->castig_ratio = $request->castingRatio ?? NULL;
         $product->qty = 0;
         $product->design = $filePath;
+        $product->category_id = $request->category_id;
         $product->save();
 
 
@@ -55,11 +57,12 @@ class ProductController extends Controller
     // Show product profiles page
     public function index()
     {
-        $products = ProductProfile::with('supplierRelation.supplier','gradeRelation')->get();
+        $products = ProductProfile::with('supplierRelation.supplier','gradeRelation','category')->get();
         $suppliers = Supplier::all();
         $grades = \App\Models\Grade::all(); // assuming you have a Grade model
+        $categories = \App\Models\Category::all();
 
-        return view('product_profiles.index', compact('products', 'suppliers', 'grades'));
+        return view('product_profiles.index', compact('products', 'suppliers', 'grades','categories'));
     }
 
     public function update(Request $request, $id)
@@ -121,6 +124,12 @@ class ProductController extends Controller
 
         // Return JSON response for AJAX
         return redirect()->back()->with('success' , 'Product deleted successfully.');
+    }
+
+    public function getCategoryFromProduct($id){
+        $category_id = ProductProfile::whereId($id)->get('category_id')->first();
+        $category = Category::whereId($category_id->category_id)->first();
+        return response()->json($category);
     }
 
 

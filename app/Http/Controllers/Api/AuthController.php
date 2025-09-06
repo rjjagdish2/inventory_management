@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 
+
 class AuthController extends Controller
 {
     // Register new user
@@ -51,6 +52,25 @@ class AuthController extends Controller
             ],500);
         }
         
+    }
+
+
+    public function refresh(){
+        
+        try{
+            $token =  JWTAuth::parseToken()->refresh();
+            return response()->json([
+                'success' =>true,
+                'access_token' => $token,
+                'token_type'   => 'bearer'
+            ]);
+        }
+        catch(Exception $e){
+            return response()->json([
+                'success' => false,
+                'message' => 'Login again'
+            ],500);
+        }
     }
 
     // Get logged in user profile

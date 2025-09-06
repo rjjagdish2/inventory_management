@@ -62,7 +62,17 @@
             <button type="button" class="btn btn-sm btn-primary mt-2" id="addProductBtn">+ Add Product</button>
         </div>
 
-        
+        <!-- Product -->
+        <div class="form-group">
+            <label for="category_name" class="form-label">Category</label>
+            
+            <!-- Hidden input to send ID to backend -->
+            <input type="hidden" id="category_id" name="category_id" />
+
+            <!-- Readonly input just to show category name -->
+            <input type="text" id="category_name" class="form-control bg-light" placeholder="Auto-filled category" readonly>
+        </div>
+
 
         <!-- Quantity -->
         <div class="form-group">
@@ -81,6 +91,7 @@
                 <tr>
                     <th>Supplier</th>
                     <th>Product</th>
+                    <th>Category</th>
                     <th>Quantity</th>
                     <th>Remove</th>
                 </tr>
@@ -258,6 +269,8 @@ $(document).ready(function() {
                     $('#product').append(`<option value="${product.id}">${product.name}</option>`);
                 });
             });
+            $("#category_name").val('');
+            $("#category_id").val('');
         });
     });
 
@@ -286,6 +299,8 @@ $(document).ready(function() {
                 alert("There is some issue while creating product!!" );
             }
         });
+        $("#category_name").val('');
+        $("#category_id").val('');
     });
 
     $('#customerForm').submit(function(e) {
@@ -308,6 +323,22 @@ $(document).ready(function() {
                 });
             });
         }
+        $("#category_name").val('');
+        $("#category_id").val('');
+    });
+
+    $('#product').change(function() {
+        let productId = $(this).val();
+        if(productId){
+            let url = "{{ route('category.byProduct', ':id') }}"; // Blade generates "/category-by-product/:id"
+            url = url.replace(':id', productId);
+            
+            $.get(url, function(data) {
+                console.log(data);
+                $("#category_name").val(data.name);
+                $("#category_id").val(data.id);
+            });
+        }
     });
 
 
@@ -319,6 +350,7 @@ $(document).ready(function() {
         let supplierId = $('#supplier_id').val();
         let supplierText = $('#supplier_id option:selected').text();
         let productId = $('#product').val();
+        let categoryId = $('#category_id').val();
         let productText = $('#product option:selected').text();
         let quantity = $('#quantity').val();
         
@@ -337,6 +369,7 @@ $(document).ready(function() {
             supplier_id: supplierId,
             supplier_name: supplierText,
             product_id: productId,
+            product_id: categoryId,
             product_name: productText,
             quantity: quantity,
         };
@@ -360,6 +393,8 @@ $(document).ready(function() {
         // Clear product + quantity
         $('#product').val('');
         $('#quantity').val('');
+        $("#category_name").val('');
+        $("#category_id").val('');
     });
     $(document).on('click', '.removeItem', function() {
         let rowIndex = $(this).closest('tr').index();

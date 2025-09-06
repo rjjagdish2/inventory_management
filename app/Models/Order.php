@@ -33,7 +33,7 @@ class Order extends Model
             'order_id',              // FK for Order
             'product_id'             // FK for ProductProfile
         )
-        ->withPivot('supplier_id', 'quantity')
+        ->withPivot('supplier_id', 'quantity','category_id')
         ->withTimestamps();
     }
 }

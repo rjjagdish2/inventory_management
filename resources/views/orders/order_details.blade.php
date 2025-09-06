@@ -15,14 +15,17 @@
                 <th>Product</th>
                 <th>Supplier</th>
                 <th>Quantity</th>
+                <th>Category</th>
             </tr>
         </thead>
         <tbody>
             @foreach($order->products as $product)
+            {{-- @dd($product); --}}
                 <tr>
                     <td>{{ $product->name }}</td>
                     <td>{{ $product->suppliers[0]['name'] ?? 'N/A' }}</td>
                     <td>{{ $product->pivot->quantity }}</td>
+                    <td>{{ $product->category->name }}</td>
                 </tr>
             @endforeach
         </tbody>

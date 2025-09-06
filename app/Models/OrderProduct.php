@@ -15,6 +15,7 @@ class OrderProduct extends Model
     protected $fillable = [
         'order_id',
         'product_id',
+        'category_id',
         'supplier_id',
         'quantity',
     ];
@@ -24,10 +25,14 @@ class OrderProduct extends Model
         return $this->belongsToMany(
             ProductProfile::class,
             'order_products',
-            'order_id',     
+            'order_id',
             'product_id'    
         )
-        ->withPivot('supplier_id', 'quantity')
+        ->withPivot('supplier_id', 'quantity', 'category_id')
         ->withTimestamps();
+    }
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'category_id');
     }
 }

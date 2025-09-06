@@ -144,6 +144,17 @@
                                 @endforeach
                             </select>
                         </div>
+
+                        {{-- Supplier --}}
+                        <div class="col-md-12 mb-3">
+                            <label>Category</label>
+                            <select id="productCategory" name="category_id" class="form-control" required>
+                                <option value="">-- Select Category --</option>
+                                @foreach($categories as $category)
+                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">

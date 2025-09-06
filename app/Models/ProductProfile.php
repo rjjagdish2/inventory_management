@@ -17,7 +17,8 @@ class ProductProfile extends Model
         'grade',
         'castig_ratio',
         'design',
-        'item_code'
+        'item_code',
+        'category_id'
     ];
     
     /**
@@ -57,5 +58,9 @@ class ProductProfile extends Model
         )
         ->withPivot('supplier_id', 'quantity')
         ->withTimestamps();
+    }
+
+    public function category() {
+        return $this->belongsTo(Category::class);
     }
 }

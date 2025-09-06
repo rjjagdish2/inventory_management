@@ -31,7 +31,8 @@ class OrderController extends Controller
         $order = Order::with([
             'customer', 
             'products', 
-            'products.suppliers'
+            'products.suppliers',
+            'products.category'
         ])->findOrFail($id);
 
         
@@ -67,6 +68,7 @@ class OrderController extends Controller
             $orderProduct = new OrderProduct;
             $orderProduct->order_id = $order->id;
             $orderProduct->product_id = $item['product_id'];
+            $orderProduct->product_id = $item['category_id'];
             $orderProduct->supplier_id = $item['supplier_id'];
             $orderProduct->quantity = $item['quantity'];
             $orderProduct->save();

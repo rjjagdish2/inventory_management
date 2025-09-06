@@ -19,7 +19,7 @@ class JwtMiddleware
         } catch (TokenExpiredException $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Token has expired, please login again'
+                'message' => 'Token expired'
             ], 401);
         } catch (TokenInvalidException $e) {
             return response()->json([

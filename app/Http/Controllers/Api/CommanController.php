@@ -42,7 +42,8 @@ class CommanController extends Controller
             $data = Order::with([
                 'customer', 
                 'products', 
-                'products.suppliers'
+                'products.suppliers',
+                'products.category'
             ])->find($orderId);
 
             if(!$data){
@@ -79,5 +80,9 @@ class CommanController extends Controller
                 'message'=>'something went wrong!'
             ], 500);
         }
+    }
+
+    public function storeInward(Request $request){
+        
     }
 }

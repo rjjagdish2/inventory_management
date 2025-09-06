@@ -35,6 +35,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/', [ProductController::class, 'index'])->name('products.index');
         Route::post('/destroy/{id}', [ProductController::class, 'destroy'])->name('products.destroy');
         Route::post('/update/{id}', [ProductController::class, 'update'])->name('products.update');
+        Route::get('/get-category/{id}',[ProductController::class,'getCategoryFromProduct'])->name('category.byProduct');
     });
 
     Route::prefix('supplier')->group(function () {
@@ -60,6 +61,5 @@ Route::middleware('auth')->group(function () {
         
         
     });
-
 });
 
