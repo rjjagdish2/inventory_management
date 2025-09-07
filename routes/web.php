@@ -7,6 +7,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\CommonController;
+use App\Http\Controllers\CategoryController;
 
 use App\Http\Controllers\AuthController;
 // login form
@@ -50,6 +51,14 @@ Route::middleware('auth')->group(function () {
         Route::post('/grade-add', [GradeController::class, 'store'])->name('grade.store');
         Route::post('/grade-delete', [GradeController::class, 'destroy'])->name('grade.delete');
         Route::post('/grade-update', [GradeController::class, 'update'])->name('grade.update');
+    });
+
+    Route::prefix('categories')->group(function () {
+        Route::get('/', [CategoryController::class, 'index'])->name('category.index');
+        Route::post('/store', [CategoryController::class, 'store'])->name('category.store');
+        Route::post('/update', [CategoryController::class, 'update'])->name('category.update');
+        Route::post('/delete', [CategoryController::class, 'delete'])->name('category.delete');
+
     });
 
     Route::prefix('customers')->group(function () {

@@ -53,4 +53,11 @@
         </a>
     </li>
 
+    <li class="nav-item active">
+        <a class="nav-link" href="{{ route('category.index') }}">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Category Management</span>
+        </a>
+    </li>
+
 </ul>
