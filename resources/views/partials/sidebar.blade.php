@@ -67,4 +67,11 @@
         </a>
     </li>
 
+    <li class="nav-item active">
+        <a class="nav-link" href="{{ route('supervisor.index') }}">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Supervisors</span>
+        </a>
+    </li>
+
 </ul>

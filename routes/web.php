@@ -9,6 +9,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\CommonController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\InwardController;
+use App\Http\Controllers\SupervisorController;
 
 use App\Http\Controllers\AuthController;
 // login form
@@ -54,6 +55,13 @@ Route::middleware('auth')->group(function () {
         Route::post('/grade-update', [GradeController::class, 'update'])->name('grade.update');
     });
 
+    Route::prefix('supervisor')->group(function () {
+        Route::get('/', [SupervisorController::class, 'index'])->name('supervisor.index');
+        Route::post('/store', [SupervisorController::class, 'store'])->name('supervisor.store');
+        Route::post('/delete', [SupervisorController::class, 'destroy'])->name('supervisor.delete');
+        Route::post('/update', [SupervisorController::class, 'update'])->name('supervisor.update');
+    });
+
     Route::prefix('categories')->group(function () {
         Route::get('/', [CategoryController::class, 'index'])->name('category.index');
         Route::post('/store', [CategoryController::class, 'store'])->name('category.store');
@@ -61,6 +69,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/delete', [CategoryController::class, 'delete'])->name('category.delete');
 
     });
+
 
     Route::prefix('customers')->group(function () {
 
