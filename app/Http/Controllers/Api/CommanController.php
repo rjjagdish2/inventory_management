@@ -58,7 +58,7 @@ class CommanController extends Controller
             return response()->json([
                 'success' => true,
                 "message"=>"Order Details",
-                'order_ids' => $data
+                'order_details' => $data
             ]);
         }catch (Exception $e) {
             return response()->json([
