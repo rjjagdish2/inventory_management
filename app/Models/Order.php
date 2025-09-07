@@ -15,7 +15,8 @@ class Order extends Model
         'customer_id',
         'order_date',
         'description',
-        'grn_no'
+        'grn_no',
+        
     ];
 
     // 🔗 An Order belongs to a Customer

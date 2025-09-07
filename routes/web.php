@@ -8,6 +8,7 @@ use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\CommonController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\InwardController;
 
 use App\Http\Controllers\AuthController;
 // login form
@@ -69,6 +70,14 @@ Route::middleware('auth')->group(function () {
         Route::post('/destroy/{id}', [CustomerController::class, 'destroy'])->name('customer.destroy');
         
         
+    });
+
+
+    Route::prefix('inwards')->group(function () {
+        Route::get('/', [InwardController::class, 'index'])->name('inward.index');
+        Route::get('/{id}', [InwardController::class, 'show'])->name('inward.show');
+
+
     });
 });
 

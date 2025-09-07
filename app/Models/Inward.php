@@ -13,8 +13,8 @@ class Inward extends Model
 
     protected $fillable = [
         'grn_no',
-        'order_no',
-        'supervisor_no',
+        'order_id',
+        'supervisor_id',
     ];
 
     /**

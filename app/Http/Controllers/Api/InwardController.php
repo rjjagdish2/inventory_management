@@ -17,9 +17,10 @@ class InwardController extends Controller
      */
     public function store(Request $request)
     {
+        
         // ✅ Validate request
         $validated = $request->validate([
-            'grn_no'        => 'required',
+            'grn_no'        => 'required|unique:inwards,grn_no',
             'order_no'      => 'required',
             'supervisor_no' => 'required',
             'items'         => 'required',
@@ -32,6 +33,7 @@ class InwardController extends Controller
         ]);
 
         DB::beginTransaction();
+
 
         try {
             // ✅ Create the main inward entry
@@ -70,4 +72,5 @@ class InwardController extends Controller
             ], 500);
         }
     }
+
 }
