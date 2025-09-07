@@ -189,6 +189,16 @@
                         </div>
 
                         <div class="col-md-12 mb-3">
+                            <label>Category</label>
+                            <select id="productCategory" name="category_id" class="form-control" required>
+                                <option value="">-- Select Category --</option>
+                                @foreach($categories as $category)
+                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="col-md-12 mb-3">
                             <label for="productSupplier" class="form-label">Supplier</label>
                             <select class="form-control" id="productSupplier" name="supplier_id" required>
                                 <option value="">-- Select Supplier --</option>
@@ -283,7 +293,7 @@ $(document).ready(function() {
         //     $('#productForm')[0].reset();
         // });
         let formData = new FormData(this);
-        
+        let categoryName = $('#productCategory option:selected').text();
         $.ajax({
             url: "{{ route('products.store') }}",
             type: "POST",
@@ -292,6 +302,8 @@ $(document).ready(function() {
             contentType: false,  // Don't set contentType
             success: function(data) {
                 $('#product').append(`<option value="${data.id}" selected>${data.name}</option>`);
+                $('#category_id').val(data.categoryId);
+                $('#category_name').val(categoryName);
                 $('#productModal').modal('hide');
                 $('#productForm')[0].reset();
             },

@@ -42,9 +42,11 @@ class CommanController extends Controller
             $data = Order::with([
                 'customer', 
                 'products', 
-                'products.suppliers',
+                'products.supplierRelation.supplier',
                 'products.category'
             ])->find($orderId);
+
+            
 
             if(!$data){
                 return response()->json([
@@ -83,6 +85,6 @@ class CommanController extends Controller
     }
 
     public function storeInward(Request $request){
-        
+
     }
 }

@@ -44,7 +44,9 @@ class OrderController extends Controller
         $suppliers = Supplier::all();
         $grades = Grade::all();
         $customers = Customer::all();
-        return view('orders.create', compact('suppliers','customers','grades'));
+        $categories = \App\Models\Category::all();
+
+        return view('orders.create', compact('suppliers','customers','grades','categories'));
     }
 
     public function store(Request $request)
@@ -68,7 +70,7 @@ class OrderController extends Controller
             $orderProduct = new OrderProduct;
             $orderProduct->order_id = $order->id;
             $orderProduct->product_id = $item['product_id'];
-            $orderProduct->product_id = $item['category_id'];
+            $orderProduct->category_id = $item['category_id'];
             $orderProduct->supplier_id = $item['supplier_id'];
             $orderProduct->quantity = $item['quantity'];
             $orderProduct->save();

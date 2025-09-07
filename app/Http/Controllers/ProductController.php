@@ -89,6 +89,7 @@ class ProductController extends Controller
         $product->size = $request->size ?? $product->size;
         $product->grade = $request->grade_id ?? $product->grade;
         $product->castig_ratio = $request->castingRatio ?? $product->castig_ratio;
+        $product->category_id = $request->category_id ?? $product->category_id;
         $product->save();
 
         // Update supplier relation

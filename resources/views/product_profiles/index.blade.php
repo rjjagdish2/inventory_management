@@ -28,6 +28,7 @@
                             <th>Size</th>
                             <th>Grade</th>
                             <th>Casting Ratio</th>
+                            <th>Category</th>
                             <th>Supplier</th>
                             <th>Design</th>
                             <th class="text-center">Action</th>
@@ -46,7 +47,9 @@
                             <td>{{ $product->size }}</td>
                             <td>{{ $product->gradeRelation->name ?? '-' }}</td>
                             <td>{{ $product->castig_ratio }}</td>
+                            <td>{{ $product->category->name ?? '-' }}</td>
                             <td>{{ $product->supplierRelation->supplier->name ?? '-' }}</td>
+                            
                             <td> @if($product->design)
                                     <a href="{{ asset('storage/'.$product->design) }}" class="btn btn-sm btn-info" target="_blank" download>
                                         Download
@@ -61,7 +64,8 @@
                                         data-size="{{ $product->size }}"
                                         data-grade="{{ $product->grade }}"
                                         data-casting="{{ $product->castig_ratio }}"
-                                        data-supplier="{{ $product->supplierRelation->supplier_id }}">
+                                        data-supplier="{{ $product->supplierRelation->supplier_id }}"
+                                        data-category="{{ $product->category }}">
                                     Edit
                                 </button>
                                 {{-- <form action="{{ route('products.destroy', $product->id) }}" method="POST" class="d-inline">
@@ -189,6 +193,7 @@ $(document).ready(function() {
         $('#productGrade').val(product.grade);
         $('#productCastingRatio').val(product.casting);
         $('#productSupplier').val(product.supplier);
+        $('#productCategory').val(product.category.id);
 
         $('#productModalLabel').text('Edit Product');
         $('#saveProductBtn').text('Update Product');
