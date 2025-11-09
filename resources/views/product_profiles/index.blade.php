@@ -53,9 +53,10 @@
                             <td>{{ $product->category->name ?? '-' }}</td>
                             <td>{{ $product->supplierRelation->supplier->name ?? '-' }}</td>
 
-                            <td> @if($product->design)
-                                    <a href="{{ asset('storage/'.$product->design) }}" class="btn btn-sm btn-info" target="_blank" download>
-                                        Download
+                            <td>
+                                @if($product->design)
+                                    <a href="{{ route('product.download', $product->id) }}" class="btn btn-sm btn-info">
+                                        <i class="fas fa-download"></i> Download
                                     </a>
                                 @endif
                             </td>

@@ -8,6 +8,8 @@ use App\Models\ProductProfile;
 use App\Models\ProductSupplier;
 use App\Models\Supplier;
 use App\Models\Category;
+use Illuminate\Support\Facades\Storage;
+
 
 class ProductController extends Controller
 {
@@ -136,6 +138,17 @@ class ProductController extends Controller
         $category_id = ProductProfile::whereId($id)->get('category_id')->first();
         $category = Category::whereId($category_id->category_id)->first();
         return response()->json($category);
+    }
+
+    public function download($id)
+    {
+        $product = \App\Models\ProductProfile::findOrFail($id);
+
+        if ($product->design && Storage::disk('public')->exists($product->design)) {
+            return Storage::disk('public')->download($product->design);
+        }
+
+        return redirect()->back()->with('error', 'File not found.');
     }
 
 

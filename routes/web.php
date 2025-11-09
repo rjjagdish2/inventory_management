@@ -40,6 +40,8 @@ Route::middleware('auth')->group(function () {
         Route::post('/destroy/{id}', [ProductController::class, 'destroy'])->name('products.destroy');
         Route::post('/update/{id}', [ProductController::class, 'update'])->name('products.update');
         Route::get('/get-category/{id}',[ProductController::class,'getCategoryFromProduct'])->name('category.byProduct');
+        Route::get('/product/download/{id}', [App\Http\Controllers\ProductProfileController::class, 'download'])->name('product.download');
+
     });
 
     Route::prefix('supplier')->group(function () {
