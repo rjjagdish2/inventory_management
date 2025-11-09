@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\GradeController;
+use App\Http\Controllers\MetalController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\CustomerController;
@@ -55,6 +56,13 @@ Route::middleware('auth')->group(function () {
         Route::post('/grade-update', [GradeController::class, 'update'])->name('grade.update');
     });
 
+    Route::prefix('metal')->group(function () {
+        Route::get('/management', [MetalController::class, 'index'])->name('metal.index');
+        Route::post('/metal-add', [MetalController::class, 'store'])->name('metal.store');
+        Route::post('/metal-delete', [MetalController::class, 'destroy'])->name('metal.delete');
+        Route::post('/metal-update', [MetalController::class, 'update'])->name('metal.update');
+    });
+
     Route::prefix('supervisor')->group(function () {
         Route::get('/', [SupervisorController::class, 'index'])->name('supervisor.index');
         Route::post('/store', [SupervisorController::class, 'store'])->name('supervisor.store');
@@ -77,15 +85,14 @@ Route::middleware('auth')->group(function () {
         Route::post('/store', [CustomerController::class, 'store'])->name('customer.store');
         Route::post('/update/{id}', [CustomerController::class, 'update'])->name('customer.update');
         Route::post('/destroy/{id}', [CustomerController::class, 'destroy'])->name('customer.destroy');
-        
-        
+
+
     });
 
 
     Route::prefix('inwards')->group(function () {
         Route::get('/', [InwardController::class, 'index'])->name('inward.index');
         Route::get('/{id}', [InwardController::class, 'show'])->name('inward.show');
-
 
     });
 });

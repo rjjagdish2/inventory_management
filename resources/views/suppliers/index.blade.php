@@ -20,23 +20,34 @@
                 <table class="table table-bordered table-hover align-middle mb-0">
                     <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Phone</th>
+                            <th width="10%">Supplier Code</th>
+                            <th width="20%">GST In.</th>
+                            <th width="15%">Name</th>
+                            <th width="15%">Phone</th>
+                            <th width="25%">Address</th>
+                            <th width="15%">Contact Person</th>
+                            
                             <th class="text-center">Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         @forelse($suppliers as $supplier)
                         <tr>
-                            <td>{{ $supplier->id }}</td>
+                            <td>{{ $supplier->supplier_code ?? '-' }}</td>
+                            <td>{{ $supplier->gstin ?? '-'}}</td>
                             <td>{{ $supplier->name }}</td>
                             <td>{{ $supplier->phone ?? '-' }}</td>
+                            <td>{{ $supplier->address ?? '-' }}</td>
+                            <td>{{ $supplier->contact_person ?? '-' }}</td>
                             <td class="text-center">
                                 <button class="btn btn-sm btn-warning editSupplierBtn"
                                         data-id="{{ $supplier->id }}"
                                         data-name="{{ $supplier->name }}"
-                                        data-phone="{{ $supplier->phone }}">
+                                        data-phone="{{ $supplier->phone }}"
+                                        data-supplier_code="{{ $supplier->supplier_code }}"
+                                        data-gstin="{{ $supplier->gstin }}"
+                                        data-address="{{ $supplier->address }}"
+                                        data-contact_person="{{ $supplier->contact_person }}">
                                     Edit
                                 </button>
                                 {{-- <button class="btn btn-sm btn-danger deleteSupplierBtn" data-id="{{ $supplier->id }}">Delete</button> --}}
@@ -56,7 +67,7 @@
 
 {{-- Supplier Modal --}}
 <div class="modal fade" id="supplierModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog" style="max-width: 65%;">
         <div class="modal-content">
             <form id="supplierForm">
                 @csrf
@@ -68,16 +79,45 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div class="mb-3">
-                        <label>Name</label>
-                        <input type="text" id="supplierName" name="name" class="form-control" required>
+                    <div class="row">
+                        <!-- Supplier Code -->
+                        <div class="col-md-6 mb-3">
+                            <label for="supplierCode" class="form-label">Supplier Code</label>
+                            <input type="text" id="supplierCode" name="supplier_code" class="form-control">
+                        </div>
+
+                        <!-- GST IN -->
+                        <div class="col-md-6 mb-3">
+                            <label for="gstIn" class="form-label">GST IN</label>
+                            <input type="text" id="gstIn" name="gstin" class="form-control">
+                        </div>
+
+                        <!-- Name -->
+                        <div class="col-md-6 mb-3">
+                            <label for="supplierName" class="form-label">Name <span class="text-danger">*</span></label>
+                            <input type="text" id="supplierName" name="name" class="form-control" required>
+                        </div>
+
+                        <!-- Phone -->
+                        <div class="col-md-6 mb-3">
+                            <label for="supplierPhone" class="form-label">Phone</label>
+                            <input type="text" id="supplierPhone" name="phone" class="form-control">
+                        </div>
+
+                        <!-- Address -->
+                        <div class="col-md-6 mb-3">
+                            <label for="supplierAddress" class="form-label">Address</label>
+                            <textarea id="supplierAddress" name="address" class="form-control"></textarea>
+                        </div>
+
+                        <!-- Contact Person -->
+                        <div class="col-md-6 mb-3">
+                            <label for="supplierContactPerson" class="form-label">Contact Person</label>
+                            <input type="text" id="supplierContactPerson" name="contact_person" class="form-control">
+                        </div>
                     </div>
-                    
-                    <div class="mb-3">
-                        <label>Phone</label>
-                        <input type="text" id="supplierPhone" name="phone" class="form-control">
-                    </div>                    
                 </div>
+
                 <div class="modal-footer">
                     
                     <button type="submit" class="btn btn-primary" id="saveSupplierBtn">Save Supplier</button>
@@ -107,6 +147,10 @@ $(document).ready(function() {
         $('#supplierId').val(supplier.id);
         $('#supplierName').val(supplier.name);
         $('#supplierPhone').val(supplier.phone);
+        $('#supplierCode').val(supplier.supplier_code);
+        $('#gstIn').val(supplier.gstin);
+        $('#supplierAddress').val(supplier.address);
+        $('#supplierContactPerson').val(supplier.contact_person);
         
 
         $('#supplierModalLabel').text('Edit Supplier');

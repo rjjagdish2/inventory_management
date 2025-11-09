@@ -16,6 +16,20 @@
             <button type="button" class="close" data-dismiss="alert">&times;</button>
         </div>
     @endif
+    @if ($errors->any())
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>Whoops!</strong> Please fix the following errors:
+            <ul class="mb-0 mt-1">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
+
 
     {{-- Grades Table --}}
     <div class="card shadow-sm">
@@ -25,6 +39,7 @@
                     <thead class="thead-light">
                         <tr>
                             <th>ID</th>
+                            <th>Metal Name</th>
                             <th>Grade Name</th>
                             <th class="text-center">Actions</th>
                         </tr>
@@ -33,11 +48,13 @@
                         @forelse($grades as $grade)
                         <tr>
                             <td>{{ $grade->id }}</td>
+                            <td>{{ $grade->metal->name }}</td>
                             <td>{{ $grade->name }}</td>
                             <td class="text-center">
                                 <button class="btn btn-sm btn-warning editGradeBtn"
                                         data-id="{{ $grade->id }}"
                                         data-name="{{ $grade->name }}"
+                                        data-metal="{{ $grade->metal_id }}"
                                         data-toggle="modal"
                                         data-target="#editGradeModal">
                                     Edit
@@ -73,8 +90,23 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="gradeName">Grade Name</label>
+                        <label for="gradeName">Select Metal <span class="text-danger">*</span></label>
+                        <select name="metal_id" class="form-control" required>
+                            <option class="form-control" value="">-- Select Metal --</option>
+                            @foreach ($metals as $metal)
+                                <option class="form-control" value="{{ $metal->id }}">{{ $metal->name }}</option>
+                            @endforeach
+                        </select>
+                        @error('metal_id')
+                            <span class="text-danger small">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <label for="gradeName">Grade Name <span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="gradeName" name="name" required>
+                        @error('gradeName')
+                            <span class="text-danger small">{{ $message }}</span>
+                        @enderror
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -99,8 +131,17 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="editGradeName">Grade Name</label>
-                        <input type="text" class="form-control" id="editGradeName" name="name" required>
+                        <label for="gradeName">Select Metal <span class="text-danger">*</span></label>
+                        <select name="metal_id" id="editMetalId" class="form-control" >
+                            <option class="form-control" value="">-- Select Metal --</option>
+                            @foreach ($metals as $metal)
+                                <option class="form-control" value="{{ $metal->id }}">{{ $metal->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="editGradeName">Grade Name <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="editGradeName" name="name" >
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -112,17 +153,22 @@
     </div>
 </div>
 
+
+
 @push('scripts')
 <script>
 $(document).ready(function() {
     // Prefill Edit Modal
     $('.editGradeBtn').on('click', function() {
         let gradeId = $(this).data('id');
+        let metalId = $(this).data('metal');
         let gradeName = $(this).data('name');
 
         $('#editGradeId').val(gradeId);
+        $('#editMetalId').val(metalId).trigger('change');
         $('#editGradeName').val(gradeName);
     });
+
 });
 </script>
 @endpush

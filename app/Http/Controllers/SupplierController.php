@@ -24,6 +24,10 @@ class SupplierController extends Controller
         $supplier = new Supplier;
         $supplier->name = $request->name;
         $supplier->phone = $request->phone ?? NULL;
+        $supplier->address = $request->address ?? NULL;
+        $supplier->gstin = $request->gstin ?? NULL;
+        $supplier->supplier_code = $request->supplier_code ?? NULL;
+        $supplier->contact_person = $request->contact_person ?? NULL;
         $supplier->save();
 
         return response()->json($supplier);
@@ -38,6 +42,8 @@ class SupplierController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'phone' => 'nullable|string|max:20',
+            'supplier_code' => 'nullable|string|max:190',
+            'contact_person' => 'nullable|string|max:190',
         ]);
 
         $supplier->update($request->all());

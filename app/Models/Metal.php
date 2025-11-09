@@ -5,18 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Grade extends Model
+class Metal extends Model
 {
     use HasFactory;
 
-    protected $table = 'grades';
+    protected $table = 'metals';
 
     protected $fillable = [
         'name',
     ];
 
-    public function metal()
+    public function grades()
     {
-        return $this->belongsTo(Metal::class);
+        return $this->hasMany(Grade::class);
     }
+
 }

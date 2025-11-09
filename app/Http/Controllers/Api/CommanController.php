@@ -13,7 +13,7 @@ use App\Models\Supervisor;
 
 class CommanController extends Controller
 {
-    
+
     public function getOrders(){
         try{
             $orderIds = Order::get()->pluck('id');
@@ -27,12 +27,12 @@ class CommanController extends Controller
                 'message'=>'something went wrong!'
             ], 500);
         }
-        
+
         // return response()->json($orders);
     }
     public function getOrderDetails($orderId){
         try {
-            
+
             if(!isset($orderId) && !empty($orderId)){
                 return response()->json([
                     "success"=>false,
@@ -40,13 +40,13 @@ class CommanController extends Controller
                 ],422);
             }
             $data = Order::with([
-                'customer', 
-                'products', 
+                'customer',
+                'products',
                 'products.supplierRelation.supplier',
                 'products.category'
             ])->find($orderId);
 
-            
+
 
             if(!$data){
                 return response()->json([
@@ -68,7 +68,7 @@ class CommanController extends Controller
         }
         // return response()->json($data);
     }
-    
+
     public function getSuppervisors(){
         try{
             $supervisors = Supervisor::all();

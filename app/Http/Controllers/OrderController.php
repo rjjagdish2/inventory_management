@@ -15,7 +15,7 @@ class OrderController extends Controller
 
     public function index(){
         $orders = Order::with('customer')->orderBy('id', 'desc')->paginate(10);
-        
+
         return view('orders.index',compact('orders'));
     }
 
@@ -29,13 +29,13 @@ class OrderController extends Controller
         // $products = ProductProfile::whereIn('id',$productIds)->get();
         // $suppliers = Supplier::whereIn('id',$supplierIds)->get();
         $order = Order::with([
-            'customer', 
-            'products', 
+            'customer',
+            'products',
             'products.suppliers',
             'products.category'
         ])->findOrFail($id);
 
-        
+
         return view('orders.order_details',compact('order'));
     }
 
@@ -64,9 +64,9 @@ class OrderController extends Controller
         ]);
 
         $items = json_decode($request->items, true);
-        
+
         foreach($items as $item){
-            
+
             $orderProduct = new OrderProduct;
             $orderProduct->order_id = $order->id;
             $orderProduct->product_id = $item['product_id'];
@@ -75,7 +75,7 @@ class OrderController extends Controller
             $orderProduct->quantity = $item['quantity'];
             $orderProduct->save();
         }
-        
+
 
         return redirect()->back()->with('success', 'Order created successfully!');
     }
@@ -87,6 +87,6 @@ class OrderController extends Controller
     }
 
     public function printPdf(){
-        
+
     }
 }

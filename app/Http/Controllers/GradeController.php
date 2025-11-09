@@ -5,23 +5,32 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\Grade;
+use App\Models\Metal;
 
 class GradeController extends Controller
 {
     public function index()
     {
-        
-        $grades = Grade::all();
-        return view('grade.index', compact('grades'));
+
+        $grades = Grade::with('metal')->orderBy('metal_id')->get();
+
+        $metals= Metal::all();
+
+        return view('grade.index', compact('grades','metals'));
     }
 
     public function store(Request $request)
     {
+
         $request->validate([
             'name' => 'required',
+            'metal_id' => 'required|exists:metals,id',
         ]);
 
-        Grade::create($request->all());
+        $grade = new Grade;
+        $grade->name = trim($request->name);
+        $grade->metal_id = trim($request->metal_id);
+        $grade->save();
 
         return redirect()->route('grade.index')->with('success', 'Grade added successfully!');
     }
@@ -31,11 +40,14 @@ class GradeController extends Controller
         $request->validate([
             'id' => 'required',
             'name' => 'required',
+            'metal_id' => 'required|exists:metals,id',
         ]);
         $id = $request['id'];
 
         $grade = Grade::findOrFail($id);
-        $grade->update($request->only('name'));
+        $grade->name = $request->name;
+        $grade->metal_id = $request->metal_id;
+        $grade->save();
 
         return redirect()->route('grade.index')->with('success', 'Grade updated successfully!');
     }

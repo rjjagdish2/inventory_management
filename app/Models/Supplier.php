@@ -14,7 +14,10 @@ class Supplier extends Model
     protected $fillable = [
         'name',
         'phone',
-        
+        'address',
+        'gstin',
+        'supplier_code',
+        'contact_person',
     ];
 
     public function products()
@@ -22,6 +25,6 @@ class Supplier extends Model
         return $this->hasMany(ProductProfile::class);
     }
 
-    
-    
+
+
 }
