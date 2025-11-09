@@ -45,9 +45,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse($grades as $grade)
+                        @forelse($grades as $index->$grade)
                         <tr>
-                            <td>{{ $grade->id }}</td>
+                            <td>{{ $index+1 }}</td>
                             <td>{{ $grade->metal->name }}</td>
                             <td>{{ $grade->name }}</td>
                             <td class="text-center">
@@ -68,7 +68,7 @@
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="3" class="text-center text-muted">No grades found.</td>
+                            <td colspan="4" class="text-center text-muted">No grades found.</td>
                         </tr>
                         @endforelse
                     </tbody>
