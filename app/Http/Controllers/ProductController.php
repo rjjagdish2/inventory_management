@@ -59,10 +59,12 @@ class ProductController extends Controller
     {
         $products = ProductProfile::with('supplierRelation.supplier','gradeRelation','category')->get();
         $suppliers = Supplier::all();
+        $metals = \App\Models\Metal::has('grades')->get();
+
         $grades = \App\Models\Grade::all(); // assuming you have a Grade model
         $categories = \App\Models\Category::all();
 
-        return view('product_profiles.index', compact('products', 'suppliers', 'grades','categories'));
+        return view('product_profiles.index', compact('products', 'suppliers', 'grades','categories','metals'));
     }
 
     public function update(Request $request, $id)

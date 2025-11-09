@@ -38,14 +38,15 @@
                 <table class="table table-bordered table-hover align-middle mb-0">
                     <thead class="thead-light">
                         <tr>
-                            <th>ID</th>
+                            <th>#</th>
                             <th>Metal Name</th>
                             <th>Grade Name</th>
                             <th class="text-center">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse($grades as $index->$grade)
+
+                        @forelse($grades as $index=>$grade)
                         <tr>
                             <td>{{ $index+1 }}</td>
                             <td>{{ $grade->metal->name }}</td>

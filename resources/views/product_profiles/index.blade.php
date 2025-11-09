@@ -25,7 +25,7 @@
                             <th>ID</th>
                             <th>Name</th>
                             <th>Code</th>
-                            <th>Size</th>
+                            <th>Product Size</th>
                             <th>Grade</th>
                             <th>Casting Ratio</th>
                             <th>Category</th>
@@ -89,8 +89,8 @@
 
 {{-- ================= Product Modal ================= --}}
 <div class="modal fade" id="productModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
+    <div class="modal-dialog" style="max-width: 65%;">
+        <div class="modal-content ">
             <form id="productForm" enctype="multipart/form-data">
                 @csrf
                 <input type="hidden" id="productId" name="product_id">
@@ -115,31 +115,39 @@
                         </div>
                         {{-- Size --}}
                         <div class="col-md-6 mb-3">
-                            <label>Size</label>
+                            <label>Product Size</label>
                             <input type="text" id="productSize" name="size" class="form-control">
-                        </div>
-                        {{-- Grade --}}
-                        <div class="col-md-6 mb-3">
-                            <label>Grade</label>
-                            <select id="productGrade" name="grade_id" class="form-control">
-                                <option value="">-- Select Grade --</option>
-                                @foreach($grades as $grade)
-                                    <option value="{{ $grade->id }}">{{ $grade->name }}</option>
-                                @endforeach
-                            </select>
                         </div>
                         {{-- Casting Ratio --}}
                         <div class="col-md-6 mb-3">
                             <label>Casting Ratio</label>
                             <input type="text" id="productCastingRatio" name="castingRatio" placeholder="Enter ratio" class="form-control">
                         </div>
+                        {{-- Grade --}}
+                        <div class="col-md-6 mb-3">
+                            <label>Metal</label>
+                            <select id="productMetal" name="metal_id" class="form-control">
+                                <option value="">-- Select Metal --</option>
+                                @foreach($metals as $metal)
+                                    <option value="{{ $metal->id }}">{{ $metal->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label>Grade</label>
+                            <select id="productGrade" name="grade_id" class="form-control">
+                                <option value="">-- Select Grade --</option>
+
+                            </select>
+                        </div>
+
                         {{-- Design --}}
                         <div class="col-md-6 mb-3">
                             <label>Design</label>
                             <input type="file" id="productDesign" name="design" class="form-control" accept="image/*,.pdf">
                         </div>
                         {{-- Supplier --}}
-                        <div class="col-md-12 mb-3">
+                        <div class="col-md-6 mb-3">
                             <label>Supplier</label>
                             <select id="productSupplier" name="supplier_id" class="form-control" required>
                                 <option value="">-- Select Supplier --</option>
@@ -150,7 +158,7 @@
                         </div>
 
                         {{-- Supplier --}}
-                        <div class="col-md-12 mb-3">
+                        <div class="col-md-6 mb-3">
                             <label>Category</label>
                             <select id="productCategory" name="category_id" class="form-control" required>
                                 <option value="">-- Select Category --</option>
@@ -183,6 +191,34 @@ $(document).ready(function() {
         $('#productModal').modal('show');
     });
 
+    $('#productMetal').change(function(){
+        const metalId = this.value;
+        const gradeSelect = $('#productGrade');
+        const url = "{{ route('grades.byMetal', ':id') }}".replace(':id', metalId);
+        gradeSelect.empty().append('<option value="">-- Select Grade --</option>');
+
+        if (metalId) {
+            $.ajax({
+                url: url,
+                type: 'GET',
+                success: function (data) {
+                    if (Array.isArray(data)) {
+                        data.forEach(function (grade) {
+                            gradeSelect.append(
+                                $('<option>', {
+                                    value: grade.id,
+                                    text: grade.name
+                                })
+                            );
+                        });
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error fetching grades:', error);
+                }
+            });
+        }
+    });
     // Open Edit Product Modal
     $('.editProductBtn').click(function() {
         let product = $(this).data();

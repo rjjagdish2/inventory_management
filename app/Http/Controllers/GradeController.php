@@ -60,4 +60,10 @@ class GradeController extends Controller
 
         return redirect()->route('grade.index')->with('success', 'Grade deleted successfully!');
     }
+    public function getGrades($metal_id)
+    {
+        $grades = \App\Models\Grade::where('metal_id', $metal_id)->get(['id', 'name']);
+        return response()->json($grades);
+    }
+
 }

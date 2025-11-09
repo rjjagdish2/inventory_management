@@ -54,6 +54,8 @@ Route::middleware('auth')->group(function () {
         Route::post('/grade-add', [GradeController::class, 'store'])->name('grade.store');
         Route::post('/grade-delete', [GradeController::class, 'destroy'])->name('grade.delete');
         Route::post('/grade-update', [GradeController::class, 'update'])->name('grade.update');
+        Route::get('/get-grades/{metal_id}', [GradeController::class, 'getGrades'])->name('grades.byMetal');;
+
     });
 
     Route::prefix('metal')->group(function () {
