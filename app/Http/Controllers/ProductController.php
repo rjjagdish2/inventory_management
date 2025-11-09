@@ -13,19 +13,19 @@ class ProductController extends Controller
 {
     public function getBySupplier($supplierId){
         $productsSuplier = ProductSupplier::where('supplier_id', $supplierId)->get('product_id')->toArray();
-        
+
         $products = ProductProfile::whereIn('id',$productsSuplier)->get();
-        
+
         return response()->json($products);
     }
 
     public function store(Request $request)
     {
-        
+
         $request->validate([
             'supplier_id' => 'required',
             'name' => 'required',
-            
+
         ]);
 
         $filePath = "";
@@ -37,6 +37,7 @@ class ProductController extends Controller
         $product->name = $request->name;
         $product->item_code = $request->code ?? NULL;
         $product->size = $request->size ?? NULL;
+        $product->metal_id = $request->metal_id ?? NULL;
         $product->grade = $request->grade_id ?? NULL;
         $product->castig_ratio = $request->castingRatio ?? NULL;
         $product->qty = 0;
@@ -50,14 +51,15 @@ class ProductController extends Controller
         $productSuplier->supplier_id = $request->supplier_id;
         $productSuplier->save();
 
-        
+
         return response()->json($product);
     }
 
     // Show product profiles page
     public function index()
     {
-        $products = ProductProfile::with('supplierRelation.supplier','gradeRelation','category')->get();
+        $products = ProductProfile::with('supplierRelation.supplier','gradeRelation','category','metal')->get();
+        // dd($products);
         $suppliers = Supplier::all();
         $metals = \App\Models\Metal::has('grades')->get();
 
@@ -89,6 +91,7 @@ class ProductController extends Controller
         $product->name = $request->name;
         $product->item_code = $request->code ?? $product->item_code;
         $product->size = $request->size ?? $product->size;
+        $product->metal_id = $request->metal_id ?? $product->metal_id;
         $product->grade = $request->grade_id ?? $product->grade;
         $product->castig_ratio = $request->castingRatio ?? $product->castig_ratio;
         $product->category_id = $request->category_id ?? $product->category_id;

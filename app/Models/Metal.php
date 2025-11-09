@@ -20,4 +20,10 @@ class Metal extends Model
         return $this->hasMany(Grade::class);
     }
 
+    public function metal()
+    {
+        return $this->belongsTo(\App\Models\Metal::class);
+    }
+
+
 }

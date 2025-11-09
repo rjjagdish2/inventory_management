@@ -26,6 +26,7 @@
                             <th>Name</th>
                             <th>Code</th>
                             <th>Product Size</th>
+                            <th>Metal</th>
                             <th>Grade</th>
                             <th>Casting Ratio</th>
                             <th>Category</th>
@@ -37,14 +38,16 @@
                     <tbody>
                         @forelse($products as $product)
                         {{-- @dd($product); --}}
-                        @if (empty($product->supplierRelation->supplier_id))
+                        {{-- @if (empty($product->supplierRelation->supplier_id))
                             @continue;
-                        @endif
+                        @endif --}}
                         <tr>
+
                             <td>{{ $product->id }}</td>
                             <td>{{ $product->name }}</td>
                             <td>{{ $product->item_code }}</td>
                             <td>{{ $product->size }}</td>
+                            <td>{{ $product->metal->name}}</td>
                             <td>{{ $product->gradeRelation->name ?? '-' }}</td>
                             <td>{{ $product->castig_ratio }}</td>
                             <td>{{ $product->category->name ?? '-' }}</td>
@@ -226,7 +229,8 @@ $(document).ready(function() {
         $('#productName').val(product.name);
         $('#productCode').val(product.code);
         $('#productSize').val(product.size);
-        $('#productGrade').val(product.grade);
+        $('#productMetal').val(product.metal_id).trigger('change');
+        $('#productGrade').val(product.grade).trigger('change');
         $('#productCastingRatio').val(product.casting);
         $('#productSupplier').val(product.supplier);
         $('#productCategory').val(product.category.id);

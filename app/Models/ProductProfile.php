@@ -10,7 +10,7 @@ class ProductProfile extends Model
     use HasFactory;
 
     protected $table = 'product_profile'; // table name
-    
+
     protected $fillable = [
         'name',
         'size',
@@ -18,9 +18,10 @@ class ProductProfile extends Model
         'castig_ratio',
         'design',
         'item_code',
-        'category_id'
+        'category_id',
+        'metal_id'
     ];
-    
+
     /**
      * Relation: A product can have many suppliers through order_products
      */
@@ -63,4 +64,11 @@ class ProductProfile extends Model
     public function category() {
         return $this->belongsTo(Category::class);
     }
+
+    public function metal()
+    {
+        return $this->belongsTo(\App\Models\Metal::class, 'metal_id', 'id');
+    }
+
+
 }
