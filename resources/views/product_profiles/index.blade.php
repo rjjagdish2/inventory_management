@@ -47,7 +47,7 @@
                             <td>{{ $product->name }}</td>
                             <td>{{ $product->item_code }}</td>
                             <td>{{ $product->size }}</td>
-                            <td>{{ $product->metal->name}}</td>
+                            <td>{{ $product->metal->name ?? ''}}</td>
                             <td>{{ $product->gradeRelation->name ?? '-' }}</td>
                             <td>{{ $product->castig_ratio }}</td>
                             <td>{{ $product->category->name ?? '-' }}</td>
